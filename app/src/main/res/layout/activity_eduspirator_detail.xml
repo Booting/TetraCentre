@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:background="#0d1137"
+    android:animateLayoutChanges="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#141a54"
+        android:elevation="4dp"
+        android:theme="@style/ToolBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.v7.widget.CardView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/cardHeader"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp"
+        android:layout_margin="24dp"
+        android:padding="8dp">
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/cover"
+                android:scaleType="centerCrop"/>
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+                <de.hdodenhof.circleimageview.CircleImageView android:id="@+id/imgProfile"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/profile"
+                    android:layout_margin="8dp"/>
+                <TextView android:id="@+id/lblEduspirator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_below="@+id/cardHeader"
+        android:id="@+id/cardBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        android:animateLayoutChanges="true">
+        <ScrollView android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+            // Class
+            <RelativeLayout android:id="@+id/relClass"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <ImageView android:id="@+id/imgClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_class_black_24dp"
+                    android:layout_marginRight="8dp"/>
+                <TextView android:id="@+id/lblClass"
+                    android:layout_toRightOf="@+id/imgClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:text="Class"/>
+                <ImageView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_list_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <View android:background="#80000000"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+            <LinearLayout android:id="@+id/linClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcClassList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:horizontalSpacing="8dp"
+                    android:verticalSpacing="8dp"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginRight="12dp"/>
+                <Button android:id="@+id/btnAddNewClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginRight="12dp"
+                    android:text="Add New Class"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+
+            // Assignment
+            <RelativeLayout android:id="@+id/relAssignment"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <ImageView android:id="@+id/imgAssignment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_assignment_black_24dp"
+                    android:layout_marginRight="8dp"/>
+                <TextView android:id="@+id/lblAssignment"
+                    android:layout_toRightOf="@+id/imgAssignment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:text="Assignment"/>
+                <ImageView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_list_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <View android:background="#80000000"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+            <LinearLayout android:id="@+id/linAssignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcAssignmentList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:horizontalSpacing="8dp"
+                    android:verticalSpacing="8dp"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginRight="12dp"/>
+                <Button android:id="@+id/btnAddNewAssignment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginRight="12dp"
+                    android:text="Add New Assignment"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+
+            // Chat
+            <RelativeLayout android:id="@+id/relChat"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <ImageView android:id="@+id/imgChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_chat_black_24dp"
+                    android:layout_marginRight="8dp"/>
+                <TextView android:id="@+id/lblChat"
+                    android:layout_toRightOf="@+id/imgChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:text="Chat"/>
+                <ImageView android:id="@+id/imgChatRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_list_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <View android:background="#80000000"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcChatList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:horizontalSpacing="8dp"
+                android:verticalSpacing="8dp"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="12dp"
+                android:visibility="gone"
+                android:animateLayoutChanges="true"/>
+
+            // Call
+            <RelativeLayout android:id="@+id/relCall"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <ImageView android:id="@+id/imgCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_videocam_black_24dp"
+                    android:layout_marginRight="8dp"/>
+                <TextView android:id="@+id/lblCall"
+                    android:layout_toRightOf="@+id/imgCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:text="Call"/>
+                <ImageView android:id="@+id/imgCallRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_list_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <View android:id="@+id/viewOne"
+                android:background="#80000000"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:visibility="gone"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcCallList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:horizontalSpacing="8dp"
+                android:verticalSpacing="8dp"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="12dp"
+                android:visibility="gone"
+                android:animateLayoutChanges="true"/>
+
+        </LinearLayout>
+        </ScrollView>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

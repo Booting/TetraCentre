@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#0d1137">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#141a54"
+        android:elevation="4dp"
+        android:theme="@style/ToolBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="@drawable/custom_shape_border">
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_attach_file_black_24dp"/>
+                    <TextView android:id="@+id/lblUploadFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        android:text="Upload File"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <TextView android:id="@+id/lblUploadFileKet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:text="(Only JPEG or JPG)"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <TextView android:id="@+id/txtUploadFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>
+            <EditText android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/custom_shape_border"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                android:hint="Name"
+                android:padding="8dp"
+                android:layout_marginTop="16dp"/>
+            <EditText android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/custom_shape_border"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                android:hint="Description"
+                android:padding="8dp"
+                android:gravity="left|top"
+                android:layout_marginTop="16dp"/>
+            <Button android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:text="Send"
+                android:layout_marginTop="16sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

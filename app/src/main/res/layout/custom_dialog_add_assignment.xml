@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
+
+    <TextView android:id="@+id/lblAddNewAssignment"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:text="Add New Assignment"
+        android:textAllCaps="true"/>
+    <View android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#50000000"/>
+
+    <Button android:id="@+id/btnChooseAssignmentFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="Choose Assignment File"/>
+
+    <EditText android:id="@+id/txtNameOfAssigment"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:hint="Name of Assignment"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:gravity="top|left"/>
+
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    /*** Bottom Button Action ***/
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp">
+        /** SUBMIT **/
+        <TextView android:id="@+id/lblSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:text="Submit"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:textColor="#c03a43"/>
+
+        /** CANCEL **/
+        <TextView android:id="@+id/lblCancel"
+            android:layout_toLeftOf="@+id/lblSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:text="Cancel"
+            android:textColor="@android:color/black"/>
+    </RelativeLayout>
+
+</LinearLayout>

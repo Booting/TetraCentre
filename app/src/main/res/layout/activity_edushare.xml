@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#0d1137">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#141a54"
+        android:elevation="4dp"
+        android:theme="@style/ToolBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="24dp">
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+            <LinearLayout android:id="@+id/linEduClass"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_shape_border"
+                    android:src="@mipmap/ic_personal_video_black_24dp"
+                    android:layout_gravity="center"
+                    android:padding="20dp"/>
+                <TextView android:id="@+id/lblEduClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"
+                    android:text="EduClass"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/linEduVideo"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_shape_border"
+                    android:src="@mipmap/ic_movie_black_24dp"
+                    android:layout_gravity="center"
+                    android:padding="20dp"/>
+                <TextView android:id="@+id/lblEduVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"
+                    android:text="EduVideo"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/linEduPaper"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="40dp">
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_shape_border"
+                    android:src="@mipmap/ic_receipt_black_24dp"
+                    android:layout_gravity="center"
+                    android:padding="20dp"/>
+                <TextView android:id="@+id/lblEduPaper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"
+                    android:text="EduPaper"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/linEduMedia"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_shape_border"
+                    android:src="@mipmap/ic_ondemand_video_black_24dp"
+                    android:layout_gravity="center"
+                    android:padding="20dp"/>
+                <TextView android:id="@+id/lblEduMedia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"
+                    android:text="EduMedia"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

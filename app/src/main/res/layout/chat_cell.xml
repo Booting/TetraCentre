@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="5dp">
+
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		// IMAGE
+		<de.hdodenhof.circleimageview.CircleImageView android:id="@+id/imgProfile"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:scaleType="centerCrop"/>
+
+		// NAME
+		<RelativeLayout android:id="@+id/relName"
+			android:layout_alignTop="@+id/imgProfile"
+			android:layout_toRightOf="@+id/imgProfile"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TextView android:id="@+id/txtName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Daniel Napitupulu Ch"
+				android:textColor="#000"
+				android:textSize="14sp"
+				android:layout_marginLeft="10dp"
+				android:singleLine="true"
+				android:layout_centerVertical="true"/>
+			<TextView android:id="@+id/txtDate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="#54555c"
+				android:textSize="10sp"
+				android:text="31 Dec 2015 at 22:47"
+				android:layout_centerVertical="true"
+				android:layout_alignParentRight="true"/>
+		</RelativeLayout>
+
+		// MESSAGE
+		<TextView android:id="@+id/txtText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/relName"
+			android:layout_toRightOf="@+id/imgProfile"
+			android:layout_marginLeft="10dp"
+			android:paddingTop="0dp"
+			android:textColor="#000"
+			android:textSize="14sp"
+			android:text="Kami sekeluarga mengucapkan kepada kita semua, Selamat Tahun Baru 2016 " />
+	</RelativeLayout>
+
+</LinearLayout>

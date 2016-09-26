@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0d1137">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp">
+            // PHOTO
+            <RelativeLayout android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:background="@android:color/white"
+                android:padding="1dp">
+                <TextView android:id="@+id/lblPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:textColor="#6a667e"
+                    android:text="PHOTO"
+                    android:gravity="center"/>
+                <ImageView android:id="@+id/imgPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+            </RelativeLayout>
+
+            // TITLE
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp">
+                <TextView android:id="@+id/lblEduForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:text="EDUFORM"/>
+                <TextView android:id="@+id/lblEduspirator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="19sp"
+                    android:text="EDUSPIRATOR"
+                    android:layout_marginTop="-8dp"/>
+                <Button android:id="@+id/btnLogout"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:text="SIGN OUT"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp">
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout android:id="@+id/linUsernamePassword"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/custom_shape_border">
+                    // USERNAME
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_perm_identity_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Username"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // PASSWORD
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_lock_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:background="@drawable/custom_shape_border">
+                    // NAME
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_person_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Name"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // DATE OF BIRTH
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_date_range_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtDateOfBirth"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Date of birth"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:editable="false"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // ADDRESS
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_place_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Address"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // SCHOOL
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_school_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtSchool"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="School"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // PHONE NUMBER
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_phone_iphone_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Phone Number"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:inputType="number"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // EMAIL
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_email_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Email"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:inputType="textEmailAddress"/>
+                    </LinearLayout>
+                    <View android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    // TITLE OF MATERIAL
+                    <LinearLayout android:id="@+id/linTitleOfMaterial"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="12dp">
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_attach_file_black_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"/>
+                        <EditText android:id="@+id/txtTitleOfMaterial"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:hint="Title Of Material"
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <View android:id="@+id/viewTitleOfMaterial"
+                        android:background="#d1cfcf"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <Button android:id="@+id/btnUploadOfMaterial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        android:text="Upload Of Material"
+                        android:layout_marginTop="12sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <TextView android:id="@+id/lblTitleOfMaterial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="12sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"/>
+
+                    <Button android:id="@+id/btnSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:text="Submit"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

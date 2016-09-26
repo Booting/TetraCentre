@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#141a54"
+        android:elevation="4dp"
+        android:theme="@style/ToolBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ListView android:layout_below="@+id/toolbar"
+        android:id="@+id/rcChatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:layout_marginBottom="60dp"/>
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <View android:id="@+id/viewTwo"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#1A000000"/>
+        <RelativeLayout android:id="@+id/relSendMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:showDividers="middle|none"
+            android:background="#FFF">
+            <EditText android:id="@+id/txtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="#909090"
+                android:textSize="12sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:textColorHint="#909090"
+                android:background="#FFF"
+                android:gravity="top|left"
+                android:layout_toLeftOf="@+id/txtSend"
+                android:hint="Type your message here..."/>
+            <TextView android:id="@+id/txtSend"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:text="Send"
+                android:layout_alignParentRight="true"
+                android:background="#0d1137"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="btnSendClick"
+                android:textAllCaps="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
