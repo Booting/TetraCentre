@@ -3,6 +3,7 @@ package tetra.centre.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,14 +47,16 @@ public class ClassChatAdapter extends BaseAdapter {
     private Context context;
     private Typeface fontLatoBold, fontLatoRegular;
     private SharedPreferences appsPref;
+    private ClassChatAdapterListener listener;
 
-    public ClassChatAdapter(Context context, JSONArray jsonChatList) {
+    public ClassChatAdapter(Context context, JSONArray jsonChatList, ClassChatAdapterListener listener) {
         this.mLayoutInflater = LayoutInflater.from(context);
         this.jsonChatList    = jsonChatList;
         this.context         = context;
         fontLatoBold         = FontCache.get(context, "Lato-Bold");
         fontLatoRegular      = FontCache.get(context, "Lato-Regular");
         appsPref 	         = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
+        this.listener        = listener;
 
         for (int i = 0; i < this.jsonChatList.length(); i++) {
             JSONObject jObjChat = this.jsonChatList.optJSONObject(i);
@@ -99,10 +102,12 @@ public class ClassChatAdapter extends BaseAdapter {
             vh.txtName    = (TextView) convertView.findViewById(R.id.txtName);
             vh.txtDate    = (TextView) convertView.findViewById(R.id.txtDate);
             vh.txtText    = (TextView) convertView.findViewById(R.id.txtText);
+            vh.lblAttachment = (TextView) convertView.findViewById(R.id.lblAttachment);
 
             vh.txtName.setTypeface(fontLatoBold);
             vh.txtDate.setTypeface(fontLatoRegular);
             vh.txtText.setTypeface(fontLatoRegular);
+            vh.lblAttachment.setTypeface(fontLatoRegular);
 
             convertView.setTag(vh);
         } else {
@@ -114,7 +119,18 @@ public class ClassChatAdapter extends BaseAdapter {
         Glide.with(context).load(Config.URL_PICTURES + arrayPhoto.get(position)).placeholder(R.drawable.placeholder)
                 .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(300, 300)
                 .dontAnimate().into(vh.imgProfile);
-        vh.txtText.setText(arrayMessage.get(position));
+
+        if (arrayMessage.get(position).contains(".pdf") || arrayMessage.get(position).contains(".doc") ||
+                arrayMessage.get(position).contains(".docs")) {
+            vh.lblAttachment.setVisibility(View.VISIBLE);
+            vh.txtText.setVisibility(View.GONE);
+            vh.lblAttachment.setText(arrayMessage.get(position));
+            vh.lblAttachment.setPaintFlags(vh.lblAttachment.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            vh.lblAttachment.setVisibility(View.GONE);
+            vh.txtText.setVisibility(View.VISIBLE);
+            vh.txtText.setText(arrayMessage.get(position));
+        }
 
         long lastUpdate     = Long.parseLong(arrayDate.get(position));
         long remainingDays  = Config.getRemainingDays(lastUpdate);
@@ -141,13 +157,24 @@ public class ClassChatAdapter extends BaseAdapter {
             vh.txtDate.setText(""+remainingDays+" days");
         }
 
+        vh.lblAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDownloadClicked(arrayMessage.get(position));
+            }
+        });
+
         return convertView;
     }
 
     static class ViewHolder {
     	LinearLayout relItem;
         CircleImageView imgProfile;
-        TextView txtName, txtDate, txtText;
+        TextView txtName, txtDate, txtText, lblAttachment;
+    }
+
+    public interface ClassChatAdapterListener {
+        public void onDownloadClicked(String strFile);
     }
 
 }

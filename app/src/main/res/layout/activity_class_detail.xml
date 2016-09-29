@@ -56,6 +56,15 @@
                 android:orientation="horizontal"
                 android:showDividers="middle|none"
                 android:background="#FFF">
+                <ImageView android:id="@+id/imgAttachment"
+                    android:layout_width="60dip"
+                    android:layout_height="60dip"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/icon_addphoto"
+                    android:background="#FFF"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"/>
                 <EditText android:id="@+id/txtMessage"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -69,6 +78,7 @@
                     android:background="#FFF"
                     android:gravity="top|left"
                     android:layout_toLeftOf="@+id/txtSend"
+                    android:layout_toRightOf="@+id/imgAttachment"
                     android:hint="Type your message here..."/>
                 <TextView android:id="@+id/txtSend"
                     android:layout_width="70dp"

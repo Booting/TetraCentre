@@ -51,6 +51,20 @@
 			android:textColor="#000"
 			android:textSize="14sp"
 			android:text="Kami sekeluarga mengucapkan kepada kita semua, Selamat Tahun Baru 2016 " />
+
+		// ATTACHMENT
+		<TextView android:id="@+id/lblAttachment"
+			android:layout_below="@id/relName"
+			android:layout_toRightOf="@+id/imgProfile"
+			android:layout_marginLeft="10dp"
+			android:layout_marginTop="2dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="6dp"
+			android:background="#F2F2F2"
+			android:textColor="@android:color/black"
+			android:textSize="14sp"
+			android:visibility="gone"/>
 	</RelativeLayout>
 
 </LinearLayout>

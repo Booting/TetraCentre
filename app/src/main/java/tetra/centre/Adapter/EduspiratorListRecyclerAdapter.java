@@ -7,14 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import org.json.JSONArray;
 import java.util.ArrayList;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import tetra.centre.EduspiratorDetailActivity;
 import tetra.centre.R;
+import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
 
 public class EduspiratorListRecyclerAdapter extends RecyclerView.Adapter {
@@ -88,6 +90,10 @@ public class EduspiratorListRecyclerAdapter extends RecyclerView.Adapter {
                     context.startActivity(intent);
                 }
             });
+
+            Glide.with(context).load(Config.URL_PICTURES + arrayPhoto.get(position)).placeholder(R.drawable.placeholder)
+                    .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(100, 100)
+                    .dontAnimate().into(((EduspiratorViewHolder) vh).imgProfile);
         }
     }
 
@@ -103,6 +109,7 @@ public class EduspiratorListRecyclerAdapter extends RecyclerView.Adapter {
 
     public static class EduspiratorViewHolder extends RecyclerView.ViewHolder {
         protected TextView lblEduspirator;
+        protected CircleImageView imgProfile;
         private Typeface fontLatoRegular;
         private Typeface fontLatoBold;
         private Typeface fontLatoHeavy;
@@ -116,6 +123,7 @@ public class EduspiratorListRecyclerAdapter extends RecyclerView.Adapter {
             fontLatoBold       = FontCache.get(ctx, "Lato-Bold");
             fontLatoHeavy      = FontCache.get(ctx, "Lato-Heavy");
             relEduspiratorCell = (RelativeLayout) view.findViewById(R.id.relEduspiratorCell);
+            imgProfile         = (CircleImageView) view.findViewById(R.id.imgProfile);
 
             lblEduspirator.setTypeface(fontLatoRegular);
         }
