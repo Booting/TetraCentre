@@ -15,10 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 import tetra.centre.EduPaperDetailActivity;
+import tetra.centre.Model.Paper;
 import tetra.centre.R;
 import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
@@ -27,27 +28,29 @@ public class EduPaperListRecyclerAdapter extends RecyclerView.Adapter {
     private final Context context;
     private EduPaperListRecyclerAdapterListener listener;
     private SharedPreferences appsPref;
-    public JSONArray jArrVideo;
+    private ArrayList<Paper> mDataset;
+    private ArrayList<Paper> mCleanCopyDataset;
 
-    public EduPaperListRecyclerAdapter(Context context, JSONArray jArrVideo, EduPaperListRecyclerAdapterListener mListener) {
-        this.context   = context;
-        this.jArrVideo = jArrVideo;
-        listener       = mListener;
-        this.appsPref  = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
+    public EduPaperListRecyclerAdapter(Context context, ArrayList<Paper> dataset, EduPaperListRecyclerAdapterListener mListener) {
+        this.context      = context;
+        listener          = mListener;
+        this.appsPref     = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
+        mDataset          = dataset;
+        mCleanCopyDataset = mDataset;
     }
 
     @Override
     public int getItemCount() {
-        return jArrVideo.length();
+        return mDataset.size();
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder vh, final int position) {
         if (vh instanceof EduVideoViewHolder) {
-            final JSONObject jObj = jArrVideo.optJSONObject(position);
-            ((EduVideoViewHolder) vh).lblPaperName.setText(jObj.optString("Title"));
-            ((EduVideoViewHolder) vh).txtName.setText(jObj.optString("Name"));
-            Glide.with(context).load(Config.URL_PICTURES + jObj.optString("Photo")).placeholder(R.drawable.placeholder)
+            final Paper paper = mDataset.get(position);
+            ((EduVideoViewHolder) vh).lblPaperName.setText(paper.getTitle());
+            ((EduVideoViewHolder) vh).txtName.setText(paper.getName());
+            Glide.with(context).load(Config.URL_PICTURES + paper.getPhoto()).placeholder(R.drawable.placeholder)
                     .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(300, 300)
                     .dontAnimate().into(((EduVideoViewHolder) vh).imgProfile);
 
@@ -55,9 +58,9 @@ public class EduPaperListRecyclerAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, EduPaperDetailActivity.class);
-                    intent.putExtra("Title", jObj.optString("Title"));
-                    intent.putExtra("Description", jObj.optString("Description"));
-                    intent.putExtra("Url", jObj.optString("Url"));
+                    intent.putExtra("Title", paper.getTitle());
+                    intent.putExtra("Description", paper.getDescription());
+                    intent.putExtra("Url", paper.getUrl());
                     context.startActivity(intent);
                 }
             });
@@ -65,11 +68,11 @@ public class EduPaperListRecyclerAdapter extends RecyclerView.Adapter {
             ((EduVideoViewHolder) vh).relDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onDeleteClicked(jObj.optString("PaperId"), jObj.optString("Title"));
+                    listener.onDeleteClicked(paper.getPaperId(), paper.getTitle());
                 }
             });
 
-            if (jObj.optString("UserId").equalsIgnoreCase(appsPref.getString("UserId", ""))) {
+            if (paper.getUserId().equalsIgnoreCase(appsPref.getString("UserId", ""))) {
                 ((EduVideoViewHolder) vh).relDelete.setVisibility(View.VISIBLE);
             } else {
                 ((EduVideoViewHolder) vh).relDelete.setVisibility(View.GONE);
@@ -96,6 +99,7 @@ public class EduPaperListRecyclerAdapter extends RecyclerView.Adapter {
         private Typeface fontLatoRegular;
         private Typeface fontLatoBold;
         private Typeface fontLatoHeavy;
+        public Paper mItem;
 
         public EduVideoViewHolder(Context ctx, View view) {
             super(view);
@@ -117,5 +121,20 @@ public class EduPaperListRecyclerAdapter extends RecyclerView.Adapter {
 
     public interface EduPaperListRecyclerAdapterListener {
         public void onDeleteClicked(String strPaperId, String strPaperName);
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        mDataset = new ArrayList<Paper>();
+        if (charText.length() == 0) {
+            mDataset.addAll(mCleanCopyDataset);
+        } else {
+            for (Paper item : mCleanCopyDataset) {
+                if (item.getTitle().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    mDataset.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

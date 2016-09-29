@@ -13,13 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
@@ -28,7 +31,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Locale;
 import tetra.centre.Adapter.EduVideoListRecyclerAdapter;
+import tetra.centre.Model.Video;
 import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
 import tetra.centre.SupportClass.TypeFaceSpan;
@@ -43,6 +50,7 @@ public class EduVideoListActivity extends AppCompatActivity implements EduVideoL
     private RequestQueue queue;
     private ProgressDialog pDialog;
     private SharedPreferences appsPref;
+    private EditText txtFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,8 @@ public class EduVideoListActivity extends AppCompatActivity implements EduVideoL
         fontLatoItalic  = FontCache.get(EduVideoListActivity.this, "Lato-Italic");
         rcEduVideoList  = (RecyclerView) findViewById(R.id.rcEduVideoList);
         fabAdd          = (FloatingActionButton) findViewById(R.id.fabAdd);
+        txtFilter       = (EditText) findViewById(R.id.txtFilter);
+        txtFilter.setTypeface(fontLatoRegular);
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +83,18 @@ public class EduVideoListActivity extends AppCompatActivity implements EduVideoL
         pDialog = new ProgressDialog(EduVideoListActivity.this);
         pDialog.setMessage("Working...");
         pDialog.setCancelable(false);
+
+        txtFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = txtFilter.getText().toString().toLowerCase(Locale.getDefault());
+                eduVideoListRecyclerAdapter.filter(text);
+            }
+        });
 
         getEduVideo();
     }
@@ -103,9 +125,17 @@ public class EduVideoListActivity extends AppCompatActivity implements EduVideoL
         JsonArrayRequest jsArrRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                ArrayList<Video> mValues = new ArrayList<>();
+                for (int i=0; i<response.length(); i++) {
+                    JSONObject jObj = response.optJSONObject(i);
+                    Video video     = new Video(jObj.optString("VideoId"), jObj.optString("UserId"), jObj.optString("Name"),
+                            jObj.optString("Photo"), jObj.optString("Title"), jObj.optString("Description"), jObj.optString("Url"));
+                    mValues.add(video);
+                }
+
                 GridLayoutManager rcInformationListLayoutManager = new GridLayoutManager(EduVideoListActivity.this, 1);
                 rcEduVideoList.setLayoutManager(rcInformationListLayoutManager);
-                eduVideoListRecyclerAdapter = new EduVideoListRecyclerAdapter(EduVideoListActivity.this, response, EduVideoListActivity.this);
+                eduVideoListRecyclerAdapter = new EduVideoListRecyclerAdapter(EduVideoListActivity.this, mValues, EduVideoListActivity.this);
                 rcEduVideoList.setAdapter(eduVideoListRecyclerAdapter);
                 pDialog.dismiss();
             }

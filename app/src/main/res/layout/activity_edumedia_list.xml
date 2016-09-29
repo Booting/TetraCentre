@@ -14,8 +14,24 @@
         android:theme="@style/ToolBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <android.support.v7.widget.RecyclerView
+    <EditText android:id="@+id/txtFilter"
         android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="13dp"
+        android:padding="8dp"
+        android:textSize="14sp"
+        android:hint="Search..."
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:background="@drawable/bottom_border"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/txtFilter"
         android:id="@+id/rcEduMediaList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

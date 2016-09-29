@@ -49,12 +49,18 @@
         <activity android:name=".EduspiratorDetailAssignmentActivity" android:screenOrientation="portrait" />
         <activity android:name=".ClassDetailActivity" android:screenOrientation="portrait" />
         <activity android:name=".EdushopActivity" android:screenOrientation="portrait" />
-        <activity android:name=".EduVideoListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".EduVideoListActivity" android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".EduVideoAddActivity" android:screenOrientation="portrait" />
-        <activity android:name=".EduMediaListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".EduMediaListActivity" android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".EduMediaDetailActivity" android:screenOrientation="portrait" />
         <activity android:name=".EduMediaAddActivity" android:screenOrientation="portrait" />
-        <activity android:name=".EduPaperListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".EduPaperListActivity"  android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".EduPaperDetailActivity" android:screenOrientation="portrait" />
         <activity android:name=".EduPaperAddActivity" android:screenOrientation="portrait" />
     </application>

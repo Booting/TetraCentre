@@ -15,9 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
+import tetra.centre.Model.Video;
 import tetra.centre.R;
 import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
@@ -26,30 +27,32 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
     private final Context context;
     private EduVideoListRecyclerAdapterListener listener;
     private SharedPreferences appsPref;
-    public JSONArray jArrVideo;
+    private ArrayList<Video> mDataset;
+    private ArrayList<Video> mCleanCopyDataset;
 
-    public EduVideoListRecyclerAdapter(Context context, JSONArray jArrVideo, EduVideoListRecyclerAdapterListener mListener) {
-        this.context   = context;
-        this.jArrVideo = jArrVideo;
-        listener       = mListener;
-        this.appsPref  = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
+    public EduVideoListRecyclerAdapter(Context context, ArrayList<Video> dataset, EduVideoListRecyclerAdapterListener mListener) {
+        this.context      = context;
+        listener          = mListener;
+        this.appsPref     = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
+        mDataset          = dataset;
+        mCleanCopyDataset = mDataset;
     }
 
     @Override
     public int getItemCount() {
-        return jArrVideo.length();
+        return mDataset.size();
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder vh, final int position) {
         if (vh instanceof EduVideoViewHolder) {
-            final JSONObject jObj = jArrVideo.optJSONObject(position);
-            ((EduVideoViewHolder) vh).lblVideoName.setText(jObj.optString("Title"));
-            ((EduVideoViewHolder) vh).txtName.setText(jObj.optString("Name"));
-            Glide.with(context).load(Config.URL_PICTURES + jObj.optString("Photo")).placeholder(R.drawable.placeholder)
+            final Video video = mDataset.get(position);
+            ((EduVideoViewHolder) vh).lblVideoName.setText(video.getTitle());
+            ((EduVideoViewHolder) vh).txtName.setText(video.getName());
+            Glide.with(context).load(Config.URL_PICTURES + video.getPhoto()).placeholder(R.drawable.placeholder)
                     .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(300, 300)
                     .dontAnimate().into(((EduVideoViewHolder) vh).imgProfile);
-            String frameVideo = "<html><body style='margin: 0; padding: 0'><iframe width='100%' height='100%' src='" + jObj.optString("Url") + "' frameborder='0' allowfullscreen></iframe></body></html>";
+            String frameVideo = "<html><body style='margin: 0; padding: 0'><iframe width='100%' height='100%' src='" + video.getUrl() + "' frameborder='0' allowfullscreen></iframe></body></html>";
             ((EduVideoViewHolder) vh).webview.setWebViewClient(new WebViewClient(){
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -63,11 +66,11 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
             ((EduVideoViewHolder) vh).relDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onDeleteClicked(jObj.optString("VideoId"), jObj.optString("Title"));
+                    listener.onDeleteClicked(video.getVideoId(), video.getTitle());
                 }
             });
 
-            if (jObj.optString("UserId").equalsIgnoreCase(appsPref.getString("UserId", ""))) {
+            if (video.getUserId().equalsIgnoreCase(appsPref.getString("UserId", ""))) {
                 ((EduVideoViewHolder) vh).relDelete.setVisibility(View.VISIBLE);
             } else {
                 ((EduVideoViewHolder) vh).relDelete.setVisibility(View.GONE);
@@ -113,5 +116,20 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
 
     public interface EduVideoListRecyclerAdapterListener {
         public void onDeleteClicked(String strVideoId, String strVideoName);
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        mDataset = new ArrayList<Video>();
+        if (charText.length() == 0) {
+            mDataset.addAll(mCleanCopyDataset);
+        } else {
+            for (Video item : mCleanCopyDataset) {
+                if (item.getTitle().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    mDataset.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
