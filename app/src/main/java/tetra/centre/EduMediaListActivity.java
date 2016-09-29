@@ -1,10 +1,12 @@
 package tetra.centre;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,8 +32,9 @@ import tetra.centre.Adapter.EduMediaListRecyclerAdapter;
 import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
 import tetra.centre.SupportClass.TypeFaceSpan;
+import tetra.centre.SupportClass.callURL;
 
-public class EduMediaListActivity extends AppCompatActivity {
+public class EduMediaListActivity extends AppCompatActivity implements EduMediaListRecyclerAdapter.EduMediaListRecyclerAdapterListener {
     private Typeface fontLatoBold, fontLatoRegular, fontLatoHeavy, fontLatoBlack, fontLatoItalic;
     private Toolbar toolbar;
     private RecyclerView rcEduMediaList;
@@ -99,7 +105,7 @@ public class EduMediaListActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 GridLayoutManager rcInformationListLayoutManager = new GridLayoutManager(EduMediaListActivity.this, 2);
                 rcEduMediaList.setLayoutManager(rcInformationListLayoutManager);
-                eduMediaListRecyclerAdapter = new EduMediaListRecyclerAdapter(EduMediaListActivity.this, response);
+                eduMediaListRecyclerAdapter = new EduMediaListRecyclerAdapter(EduMediaListActivity.this, response, EduMediaListActivity.this);
                 rcEduMediaList.setAdapter(eduMediaListRecyclerAdapter);
                 pDialog.dismiss();
             }
@@ -111,6 +117,64 @@ public class EduMediaListActivity extends AppCompatActivity {
             }
         });
         queue.add(jsArrRequest);
+    }
+
+    @Override
+    public void onDeleteClicked(final String strMediaId, String strMediaName) {
+        final Dialog dialog = new Dialog(EduMediaListActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(false);
+
+        TextView lblTitle = (TextView) dialog.findViewById(R.id.lblTitle);
+        Button btnNo      = (Button) dialog.findViewById(R.id.btnNo);
+        Button btnYes     = (Button) dialog.findViewById(R.id.btnYes);
+
+        lblTitle.setText("Are you sure to delete " + strMediaName + "?");
+        lblTitle.setTypeface(fontLatoRegular);
+        btnNo.setTypeface(fontLatoBold);
+        btnYes.setTypeface(fontLatoBold);
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new deleteMedia(strMediaId).execute();
+            }
+        });
+
+        try { dialog.show(); } catch (Exception e) {}
+    }
+
+    private class deleteMedia extends AsyncTask<String, Void, String> {
+        private String strMediaId;
+        public deleteMedia(String mMediaId) {
+            strMediaId = mMediaId;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            String strUrl   = Config.URL + "/service.php?ct=DELETEEDUMEDIA&MediaId="+strMediaId;
+            String strHasil = callURL.call(strUrl);
+            return strHasil;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(getApplicationContext(), "Delete media succesfully!", Toast.LENGTH_LONG).show();
+            getEduMedia();
+        }
     }
 
     @Override

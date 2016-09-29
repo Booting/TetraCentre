@@ -1,10 +1,12 @@
 package tetra.centre;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,8 +32,9 @@ import tetra.centre.Adapter.EduPaperListRecyclerAdapter;
 import tetra.centre.SupportClass.Config;
 import tetra.centre.SupportClass.FontCache;
 import tetra.centre.SupportClass.TypeFaceSpan;
+import tetra.centre.SupportClass.callURL;
 
-public class EduPaperListActivity extends AppCompatActivity {
+public class EduPaperListActivity extends AppCompatActivity implements EduPaperListRecyclerAdapter.EduPaperListRecyclerAdapterListener {
     private Typeface fontLatoBold, fontLatoRegular, fontLatoHeavy, fontLatoBlack, fontLatoItalic;
     private Toolbar toolbar;
     private RecyclerView rcEduPaperList;
@@ -99,7 +105,7 @@ public class EduPaperListActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 GridLayoutManager rcInformationListLayoutManager = new GridLayoutManager(EduPaperListActivity.this, 3);
                 rcEduPaperList.setLayoutManager(rcInformationListLayoutManager);
-                eduPaperListRecyclerAdapter = new EduPaperListRecyclerAdapter(EduPaperListActivity.this, response);
+                eduPaperListRecyclerAdapter = new EduPaperListRecyclerAdapter(EduPaperListActivity.this, response, EduPaperListActivity.this);
                 rcEduPaperList.setAdapter(eduPaperListRecyclerAdapter);
                 pDialog.dismiss();
             }
@@ -111,6 +117,64 @@ public class EduPaperListActivity extends AppCompatActivity {
             }
         });
         queue.add(jsArrRequest);
+    }
+
+    @Override
+    public void onDeleteClicked(final String strPaperId, String strPaperName) {
+        final Dialog dialog = new Dialog(EduPaperListActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(false);
+
+        TextView lblTitle = (TextView) dialog.findViewById(R.id.lblTitle);
+        Button btnNo      = (Button) dialog.findViewById(R.id.btnNo);
+        Button btnYes     = (Button) dialog.findViewById(R.id.btnYes);
+
+        lblTitle.setText("Are you sure to delete " + strPaperName + "?");
+        lblTitle.setTypeface(fontLatoRegular);
+        btnNo.setTypeface(fontLatoBold);
+        btnYes.setTypeface(fontLatoBold);
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new deletePaper(strPaperId).execute();
+            }
+        });
+
+        try { dialog.show(); } catch (Exception e) {}
+    }
+
+    private class deletePaper extends AsyncTask<String, Void, String> {
+        private String strPaperId;
+        public deletePaper(String mPaperId) {
+            strPaperId = mPaperId;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            String strUrl   = Config.URL + "/service.php?ct=DELETEEDUPAPER&PaperId="+strPaperId;
+            String strHasil = callURL.call(strUrl);
+            return strHasil;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(getApplicationContext(), "Delete paper succesfully!", Toast.LENGTH_LONG).show();
+            getEdePaper();
+        }
     }
 
     @Override

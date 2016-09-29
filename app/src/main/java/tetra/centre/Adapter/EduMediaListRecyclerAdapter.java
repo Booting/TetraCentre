@@ -1,7 +1,9 @@
 package tetra.centre.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,11 +25,15 @@ import tetra.centre.SupportClass.FontCache;
 
 public class EduMediaListRecyclerAdapter extends RecyclerView.Adapter {
     private final Context context;
+    private EduMediaListRecyclerAdapterListener listener;
+    private SharedPreferences appsPref;
     public JSONArray jArrVideo;
 
-    public EduMediaListRecyclerAdapter(Context context, JSONArray jArrVideo) {
+    public EduMediaListRecyclerAdapter(Context context, JSONArray jArrVideo, EduMediaListRecyclerAdapterListener mListener) {
         this.context   = context;
         this.jArrVideo = jArrVideo;
+        listener       = mListener;
+        this.appsPref  = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
     }
 
     @Override
@@ -57,6 +64,19 @@ public class EduMediaListRecyclerAdapter extends RecyclerView.Adapter {
                     context.startActivity(intent);
                 }
             });
+
+            ((EduVideoViewHolder) vh).relDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDeleteClicked(jObj.optString("MediaId"), jObj.optString("Title"));
+                }
+            });
+
+            if (jObj.optString("UserId").equalsIgnoreCase(appsPref.getString("UserId", ""))) {
+                ((EduVideoViewHolder) vh).relDelete.setVisibility(View.VISIBLE);
+            } else {
+                ((EduVideoViewHolder) vh).relDelete.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -75,6 +95,7 @@ public class EduMediaListRecyclerAdapter extends RecyclerView.Adapter {
         protected ImageView imgMedia;
         protected TextView lblMediaName, txtName;
         protected CircleImageView imgProfile;
+        protected RelativeLayout relDelete;
         private Typeface fontLatoRegular;
         private Typeface fontLatoBold;
         private Typeface fontLatoHeavy;
@@ -87,6 +108,7 @@ public class EduMediaListRecyclerAdapter extends RecyclerView.Adapter {
             lblMediaName      = (TextView) view.findViewById(R.id.lblMediaName);
             imgProfile        = (CircleImageView) view.findViewById(R.id.imgProfile);
             txtName           = (TextView) view.findViewById(R.id.txtName);
+            relDelete         = (RelativeLayout) view.findViewById(R.id.relDelete);
             fontLatoRegular   = FontCache.get(ctx, "Lato-Regular");
             fontLatoBold      = FontCache.get(ctx, "Lato-Bold");
             fontLatoHeavy     = FontCache.get(ctx, "Lato-Heavy");
@@ -94,5 +116,9 @@ public class EduMediaListRecyclerAdapter extends RecyclerView.Adapter {
             lblMediaName.setTypeface(fontLatoBold);
             txtName.setTypeface(fontLatoRegular);
         }
+    }
+
+    public interface EduMediaListRecyclerAdapterListener {
+        public void onDeleteClicked(String strMediaId, String strMediaName);
     }
 }

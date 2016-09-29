@@ -13,10 +13,28 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
-        <ImageView android:id="@+id/imgMedia"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="centerCrop"/>
+
+        <RelativeLayout android:layout_width="wrap_content"
+            android:layout_height="180dp">
+            // IMAGE MEDIA
+            <ImageView android:id="@+id/imgMedia"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"/>
+
+            // ICON DELETE
+            <RelativeLayout android:id="@+id/relDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="#f84855"
+                android:visibility="gone">
+                <ImageView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_delete_forever_white_24dp"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
 
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"

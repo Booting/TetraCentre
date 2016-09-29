@@ -1,6 +1,8 @@
 package tetra.centre.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,11 +24,15 @@ import tetra.centre.SupportClass.FontCache;
 
 public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
     private final Context context;
+    private EduVideoListRecyclerAdapterListener listener;
+    private SharedPreferences appsPref;
     public JSONArray jArrVideo;
 
-    public EduVideoListRecyclerAdapter(Context context, JSONArray jArrVideo) {
+    public EduVideoListRecyclerAdapter(Context context, JSONArray jArrVideo, EduVideoListRecyclerAdapterListener mListener) {
         this.context   = context;
         this.jArrVideo = jArrVideo;
+        listener       = mListener;
+        this.appsPref  = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
     }
 
     @Override
@@ -36,7 +43,7 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder vh, final int position) {
         if (vh instanceof EduVideoViewHolder) {
-            JSONObject jObj = jArrVideo.optJSONObject(position);
+            final JSONObject jObj = jArrVideo.optJSONObject(position);
             ((EduVideoViewHolder) vh).lblVideoName.setText(jObj.optString("Title"));
             ((EduVideoViewHolder) vh).txtName.setText(jObj.optString("Name"));
             Glide.with(context).load(Config.URL_PICTURES + jObj.optString("Photo")).placeholder(R.drawable.placeholder)
@@ -52,6 +59,19 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
             WebSettings webSettings = ((EduVideoViewHolder) vh).webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
             ((EduVideoViewHolder) vh).webview.loadData(frameVideo, "text/html", "utf-8");
+
+            ((EduVideoViewHolder) vh).relDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDeleteClicked(jObj.optString("VideoId"), jObj.optString("Title"));
+                }
+            });
+
+            if (jObj.optString("UserId").equalsIgnoreCase(appsPref.getString("UserId", ""))) {
+                ((EduVideoViewHolder) vh).relDelete.setVisibility(View.VISIBLE);
+            } else {
+                ((EduVideoViewHolder) vh).relDelete.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -69,6 +89,7 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
         protected WebView webview;
         protected TextView lblVideoName, txtName;
         protected CircleImageView imgProfile;
+        protected RelativeLayout relDelete;
         private Typeface fontLatoRegular;
         private Typeface fontLatoBold;
         private Typeface fontLatoHeavy;
@@ -80,6 +101,7 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
             lblVideoName    = (TextView) view.findViewById(R.id.lblVideoName);
             imgProfile      = (CircleImageView) view.findViewById(R.id.imgProfile);
             txtName         = (TextView) view.findViewById(R.id.txtName);
+            relDelete       = (RelativeLayout) view.findViewById(R.id.relDelete);
             fontLatoRegular = FontCache.get(ctx, "Lato-Regular");
             fontLatoBold    = FontCache.get(ctx, "Lato-Bold");
             fontLatoHeavy   = FontCache.get(ctx, "Lato-Heavy");
@@ -87,5 +109,9 @@ public class EduVideoListRecyclerAdapter extends RecyclerView.Adapter {
             lblVideoName.setTypeface(fontLatoBold);
             txtName.setTypeface(fontLatoRegular);
         }
+    }
+
+    public interface EduVideoListRecyclerAdapterListener {
+        public void onDeleteClicked(String strVideoId, String strVideoName);
     }
 }
