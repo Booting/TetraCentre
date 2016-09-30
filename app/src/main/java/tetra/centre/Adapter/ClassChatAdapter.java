@@ -3,7 +3,6 @@ package tetra.centre.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.etsy.android.grid.util.DynamicHeightImageView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.ParseException;
@@ -47,16 +47,14 @@ public class ClassChatAdapter extends BaseAdapter {
     private Context context;
     private Typeface fontLatoBold, fontLatoRegular;
     private SharedPreferences appsPref;
-    private ClassChatAdapterListener listener;
 
-    public ClassChatAdapter(Context context, JSONArray jsonChatList, ClassChatAdapterListener listener) {
+    public ClassChatAdapter(Context context, JSONArray jsonChatList) {
         this.mLayoutInflater = LayoutInflater.from(context);
         this.jsonChatList    = jsonChatList;
         this.context         = context;
         fontLatoBold         = FontCache.get(context, "Lato-Bold");
         fontLatoRegular      = FontCache.get(context, "Lato-Regular");
         appsPref 	         = context.getSharedPreferences(Config.PREF_NAME, Activity.MODE_PRIVATE);
-        this.listener        = listener;
 
         for (int i = 0; i < this.jsonChatList.length(); i++) {
             JSONObject jObjChat = this.jsonChatList.optJSONObject(i);
@@ -103,6 +101,7 @@ public class ClassChatAdapter extends BaseAdapter {
             vh.txtDate    = (TextView) convertView.findViewById(R.id.txtDate);
             vh.txtText    = (TextView) convertView.findViewById(R.id.txtText);
             vh.lblAttachment = (TextView) convertView.findViewById(R.id.lblAttachment);
+            vh.imgItem    = (DynamicHeightImageView) convertView.findViewById(R.id.imgItem);
 
             vh.txtName.setTypeface(fontLatoBold);
             vh.txtDate.setTypeface(fontLatoRegular);
@@ -120,12 +119,16 @@ public class ClassChatAdapter extends BaseAdapter {
                 .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(300, 300)
                 .dontAnimate().into(vh.imgProfile);
 
-        if (arrayMessage.get(position).contains(".pdf") || arrayMessage.get(position).contains(".doc") ||
-                arrayMessage.get(position).contains(".docs")) {
-            vh.lblAttachment.setVisibility(View.VISIBLE);
+        if (arrayMessage.get(position).contains(".jpg") || arrayMessage.get(position).contains(".png") ||
+                arrayMessage.get(position).contains(".jpeg")) {
+            //vh.lblAttachment.setVisibility(View.VISIBLE);
             vh.txtText.setVisibility(View.GONE);
-            vh.lblAttachment.setText(arrayMessage.get(position));
-            vh.lblAttachment.setPaintFlags(vh.lblAttachment.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+            vh.imgItem.setVisibility(View.VISIBLE);
+            //vh.lblAttachment.setText(arrayMessage.get(position));
+            //vh.lblAttachment.setPaintFlags(vh.lblAttachment.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+            Glide.with(context).load(Config.URL_PICTURES + arrayMessage.get(position)).placeholder(R.drawable.placeholder)
+                    .centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).override(300, 300)
+                    .dontAnimate().into(vh.imgItem);
         } else {
             vh.lblAttachment.setVisibility(View.GONE);
             vh.txtText.setVisibility(View.VISIBLE);
@@ -157,13 +160,6 @@ public class ClassChatAdapter extends BaseAdapter {
             vh.txtDate.setText(""+remainingDays+" days");
         }
 
-        vh.lblAttachment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onDownloadClicked(arrayMessage.get(position));
-            }
-        });
-
         return convertView;
     }
 
@@ -171,10 +167,6 @@ public class ClassChatAdapter extends BaseAdapter {
     	LinearLayout relItem;
         CircleImageView imgProfile;
         TextView txtName, txtDate, txtText, lblAttachment;
+        DynamicHeightImageView imgItem;
     }
-
-    public interface ClassChatAdapterListener {
-        public void onDownloadClicked(String strFile);
-    }
-
 }

@@ -51,6 +51,16 @@
 			android:textColor="#000"
 			android:textSize="14sp"
 			android:text="Kami sekeluarga mengucapkan kepada kita semua, Selamat Tahun Baru 2016 " />
+		<com.etsy.android.grid.util.DynamicHeightImageView
+			android:id="@+id/imgItem"
+			android:layout_below="@id/txtText"
+			android:layout_toRightOf="@+id/imgProfile"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:scaleType="centerCrop"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="10dp"
+			android:visibility="gone"/>
 
 		// ATTACHMENT
 		<TextView android:id="@+id/lblAttachment"

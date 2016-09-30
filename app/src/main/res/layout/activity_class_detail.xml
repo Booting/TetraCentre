@@ -64,7 +64,8 @@
                     android:background="#FFF"
                     android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
-                    android:adjustViewBounds="true"/>
+                    android:adjustViewBounds="true"
+                    android:onClick="imageOneClick"/>
                 <EditText android:id="@+id/txtMessage"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
